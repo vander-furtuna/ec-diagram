@@ -1,14 +1,15 @@
-import { CourseType } from '../../@types/ICourse';
+import { ICourse } from '../../@types/ICourse';
 import { CardContainer } from './styles';
 
 interface CardProps {
-    label: string;
-    type: CourseType[];
+    course: ICourse;
 }
 
-export function Card({ label, type }: CardProps) {
+export function Card({ course }: CardProps) {
+    const { label, type } = course;
+
     return (
-        <CardContainer>
+        <CardContainer type={type}>
             <span>{label}</span>
         </CardContainer>
     );

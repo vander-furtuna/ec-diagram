@@ -1,5 +1,6 @@
+import { Card } from '../../components/Card';
 import { COURSES } from '../../data/courses';
-import { CoursesContainer } from './styles';
+import { CoursesContainer, CoursesPeriodContainer } from './styles';
 
 interface CoursesTableProps {}
 
@@ -9,11 +10,12 @@ export function CoursesTable({}: CoursesTableProps) {
     return (
         <CoursesContainer>
             {PERIODS.map((period) => (
-                <CoursesContainer key={period}>
-                    {COURSES.map((course) => (
-                        <Card />
-                    ))}
-                </CoursesContainer>
+                <CoursesPeriodContainer key={period}>
+                    {COURSES.map((course) => {
+                        if (course.period !== period) return null;
+                        return <Card course={course} />;
+                    })}
+                </CoursesPeriodContainer>
             ))}
         </CoursesContainer>
     );
