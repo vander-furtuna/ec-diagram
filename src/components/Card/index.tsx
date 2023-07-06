@@ -1,11 +1,15 @@
-import { Handle, Position } from 'reactflow';
+import { CourseType } from '../../@types/ICourse';
 import { CardContainer } from './styles';
-export function Card() {
+
+interface CardProps {
+    label: string;
+    type: CourseType[];
+}
+
+export function Card({ label, type }: CardProps) {
     return (
         <CardContainer>
-            <Handle type="target" position={Position.Top} />
-            <span>Card</span>
-            <Handle type="source" position={Position.Bottom} id="a" />
+            <span>{label}</span>
         </CardContainer>
     );
 }

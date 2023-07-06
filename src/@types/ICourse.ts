@@ -1,5 +1,5 @@
 type CourseCode = `ECO${number}`;
-type CourseType =
+export type CourseType =
     | 'MANDATORY'
     | 'COMPUTING'
     | 'AUTOMATION'

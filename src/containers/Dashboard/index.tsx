@@ -1,11 +1,12 @@
+import { Header } from '../Header';
 import { DashboardContainer } from './styles';
 
 interface DashboardProps {}
 
 export function Dashboard({}: DashboardProps) {
-  return (
-    <DashboardContainer>
-      <></>
-    </DashboardContainer>
-  );
+    return (
+        <DashboardContainer>
+            <Header />
+        </DashboardContainer>
+    );
 }
