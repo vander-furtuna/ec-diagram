@@ -1,11 +1,12 @@
+import { InputHTMLAttributes } from 'react';
 import { SearchInputContainer } from './styles';
 
-interface SearchInputProps {}
+interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-export function SearchInput({}: SearchInputProps) {
-    return (
-        <SearchInputContainer>
-            <input type="text" />
-        </SearchInputContainer>
-    );
+export function SearchInput({ ...rest }: SearchInputProps) {
+  return (
+    <SearchInputContainer>
+      <input type="text" {...rest} />
+    </SearchInputContainer>
+  );
 }

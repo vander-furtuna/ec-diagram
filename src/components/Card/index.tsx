@@ -1,16 +1,35 @@
+import { HTMLAttributes } from 'react';
 import { ICourse } from '../../@types/ICourse';
 import { CardContainer } from './styles';
 
-interface CardProps {
-    course: ICourse;
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  course: ICourse;
+  isPrerequisite?: boolean;
+  isUnlocked?: boolean;
+  isActive?: boolean;
+  isDisabled?: boolean;
 }
 
-export function Card({ course }: CardProps) {
-    const { label, type } = course;
+export function Card({
+  course,
+  isPrerequisite = false,
+  isUnlocked = false,
+  isActive = false,
+  isDisabled = false,
+  ...rest
+}: CardProps) {
+  const { label, type } = course;
 
-    return (
-        <CardContainer type={type}>
-            <span>{label}</span>
-        </CardContainer>
-    );
+  return (
+    <CardContainer
+      type={type}
+      {...rest}
+      isActive={isActive}
+      isPrerequisite={isPrerequisite}
+      isUnlocked={isUnlocked}
+      isDisabled={isDisabled}
+    >
+      <span>{label}</span>
+    </CardContainer>
+  );
 }
