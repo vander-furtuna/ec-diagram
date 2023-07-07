@@ -1,76 +1,77 @@
 import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
+    ReactNode,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
 } from 'react';
 import { ICourse } from '../@types/ICourse';
 import { COURSES } from '../data/courses';
 
 interface ICourseContext {
-  activeCourse: ICourse;
-  courses: ICourse[];
-  handleSetActiveCourse: (course: ICourse) => void;
-  handleSearch: (search: string) => void;
+    activeCourse: ICourse;
+    courses: ICourse[];
+    handleSetActiveCourse: (course: ICourse) => void;
+    handleSearch: (search: string) => void;
 }
 
 interface ICourseProviderProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 const CourseContext = createContext<ICourseContext>({} as ICourseContext);
 
 export function CourseProvider({ children }: ICourseProviderProps) {
-  const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
-  const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
+    const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
+    const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
 
-  const handleSetActiveCourse = useCallback(
-    (course: ICourse) => {
-      setActiveCourse(course);
-    },
-    [setActiveCourse],
-  );
+    const handleSetActiveCourse = useCallback(
+        (course: ICourse) => {
+            setActiveCourse(course);
+        },
+        [setActiveCourse],
+    );
 
-  const handleSearch = useCallback((search: string) => {
-    setCourses(() => {
-      const filteredCourses = COURSES.filter((course) => {
-        return course.name.toLowerCase().includes(search.toLowerCase());
-      });
+    const handleSearch = useCallback((search: string) => {
+        console.log('search', search);
+        setCourses(() => {
+            const filteredCourses = COURSES.filter((course) => {
+                return course.name.toLowerCase().includes(search.toLowerCase());
+            });
+            console.log('filteredCourses', filteredCourses);
+            return filteredCourses;
+        });
+    }, []);
 
-      return filteredCourses;
-    });
-  }, []);
+    const value = useMemo(
+        () => ({
+            activeCourse,
+            courses,
+            handleSetActiveCourse,
+            handleSearch,
+        }),
+        [courses, activeCourse, handleSetActiveCourse, handleSearch],
+    );
 
-  const value = useMemo(
-    () => ({
-      activeCourse,
-      courses,
-      handleSetActiveCourse,
-      handleSearch,
-    }),
-    [courses, activeCourse, handleSetActiveCourse, handleSearch],
-  );
+    useEffect(() => {
+        setCourses(COURSES);
+    }, []);
 
-  useEffect(() => {
-    if (courses.length === 0) {
-      setCourses(COURSES);
-    }
-  });
-
-  return (
-    <CourseContext.Provider value={value}>{children}</CourseContext.Provider>
-  );
+    return (
+        <CourseContext.Provider value={value}>
+            {children}
+        </CourseContext.Provider>
+    );
 }
 
 export function useCourse(): ICourseContext {
-  const context = useContext(CourseContext);
+    const context = useContext(CourseContext);
 
-  if (!context) {
-    throw new Error('useCourse must be used within a AppProvider');
-  }
+    if (!context) {
+        throw new Error('useCourse must be used within a AppProvider');
+    }
 
-  return context;
+    return context;
 }
