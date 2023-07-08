@@ -7,4 +7,12 @@ export const DashboardContainer = styled.div`
     justify-content: center;
     padding: 4rem 6rem;
     gap: 4rem;
+
+    @media screen and (max-width: 700px) {
+        padding: 2rem 3rem;
+    }
+
+    @media screen and (max-width: 500px) {
+        padding: 2rem 1rem;
+    }
 `;

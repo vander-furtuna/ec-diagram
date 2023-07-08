@@ -8,6 +8,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
+    -webkit-tap-highlight-color: transparent;
+
   }
 
   body {

@@ -64,7 +64,7 @@ export const CardContainer = styled.div<CardProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.2s all ease-in-out;
+    transition: 0.3s all ease-in-out;
     outline: 2px solid transparent;
 
     ${({ isPrerequisite, isUnlocked, isDisabled }) => {
@@ -90,7 +90,7 @@ export const CardContainer = styled.div<CardProps>`
     &::before {
         content: '';
         position: absolute;
-        transition: 0.2s all ease-in-out;
+        transition: 0.3s all ease-in-out;
         z-index: -1;
         top: 0;
         left: 0;
@@ -122,9 +122,13 @@ export const CardContainer = styled.div<CardProps>`
         flex: 1;
         color: ${({ theme }) => theme.text.normal};
         font-weight: 500;
-        font-size: 0.75rem;
+        font-size: 0.65rem;
         line-height: 1.4;
         text-align: center;
+    }
+
+    &:active {
+        transform: scale(0.9);
     }
 
     &:hover {

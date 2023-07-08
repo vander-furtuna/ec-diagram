@@ -22,4 +22,8 @@ export const CoursesPeriodContainer = styled.div`
     &:nth-child(2n + 1) {
         background: ${({ theme }) => theme.gray100};
     }
+
+    @media screen and (max-width: 500px) {
+        padding: 3rem 1rem;
+    }
 `;

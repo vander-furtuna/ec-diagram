@@ -11,7 +11,9 @@ export const SearchInputContainer = styled.div`
         border: 0;
         outline: 0;
         background: transparent;
-        flex: 1;
+        display: flex;
+        width: 100%;
+        height: 100%;
         padding: 1rem;
     }
 `;
