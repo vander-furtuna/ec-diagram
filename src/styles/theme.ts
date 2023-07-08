@@ -16,6 +16,7 @@ const colorPalette = {
 
     gray100: '#F5F5F5',
     gray200: '#EAEAEA',
+    gray300: '#D9D9D9',
     gray500: '#9B9B9B',
     gray700: '#4A4A4A',
     gray900: '#2E2E2E',
@@ -43,10 +44,11 @@ export const theme = {
         secondaryDark: colorPalette.secondary500,
 
         card: {
+            normal: colorPalette.gray200,
             automation: colorPalette.automation300,
             computing: colorPalette.computing300,
             telecomunications: colorPalette.telecomunications300,
-            mandatory: colorPalette.gray200,
+            mandatory: colorPalette.gray300,
         },
     },
     input: {

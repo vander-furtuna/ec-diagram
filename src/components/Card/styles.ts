@@ -10,7 +10,18 @@ interface CardProps {
     isDisabled?: boolean;
 }
 
-const getCardColor = (type: CourseType[], isActive: boolean) => {
+const getCardColor = (
+    type: CourseType[],
+    isUnlocked: boolean,
+    isPrerequisite: boolean,
+) => {
+    if (isPrerequisite) {
+        return 'red';
+    }
+
+    if (isUnlocked) {
+        return 'purple';
+    }
     if (type.includes('AUTOMATION')) {
         return theme.background.card.automation;
     }
@@ -41,27 +52,31 @@ const getCardColor = (type: CourseType[], isActive: boolean) => {
 };
 
 export const CardContainer = styled.div<CardProps>`
+    z-index: 2;
     cursor: pointer;
-    width: 9rem;
-    height: 6rem;
+    width: 8rem;
+    height: 5rem;
     padding: 1rem;
-    background: ${({ type, isActive = false }) => getCardColor(type, isActive)};
+    background: transparent;
+    overflow: hidden;
+    position: relative;
     border-radius: ${({ theme }) => theme.borderRadius};
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 0.2s all ease-in-out;
+    outline: 2px solid transparent;
 
-    ${({ isPrerequisite, isUnlocked, isActive, isDisabled }) => {
+    ${({ isPrerequisite, isUnlocked, isDisabled }) => {
         if (isPrerequisite) {
             return css`
-                border: 2px solid red;
+                outline: 2px solid red;
             `;
         }
 
         if (isUnlocked) {
             return css`
-                border: 2px solid purple;
+                outline: 2px solid purple;
             `;
         }
 
@@ -71,6 +86,37 @@ export const CardContainer = styled.div<CardProps>`
             `;
         }
     }}
+
+    &::before {
+        content: '';
+        position: absolute;
+        transition: 0.2s all ease-in-out;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: ${({ isActive, isPrerequisite, isUnlocked }) => {
+            if ((isPrerequisite || isUnlocked) && !isActive) {
+                return '0.75rem';
+            } else if (isActive) {
+                return '100%';
+            } else {
+                return '0.25rem';
+            }
+        }};
+        height: 100%;
+        background: ${({ type, isPrerequisite = false, isUnlocked = false }) =>
+            getCardColor(type, isUnlocked, isPrerequisite)};
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        transition: 0.2s all ease-in-out;
+        z-index: -2;
+        width: 100%;
+        height: 100%;
+        background: ${({ theme }) => theme.background.card.normal};
+    }
 
     span {
         flex: 1;

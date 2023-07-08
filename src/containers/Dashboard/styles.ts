@@ -5,6 +5,6 @@ export const DashboardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 8rem;
+    padding: 4rem 6rem;
     gap: 4rem;
 `;
