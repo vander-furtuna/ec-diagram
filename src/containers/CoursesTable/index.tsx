@@ -1,7 +1,11 @@
 import { Card } from '../../components/Card';
 
 import { useCourse } from '../../hooks/course';
-import { CoursesContainer, CoursesPeriodContainer } from './styles';
+import {
+    CoursesContainer,
+    CoursesPeriodContainer,
+    EmptyMessage,
+} from './styles';
 
 interface CoursesTableProps {}
 
@@ -12,43 +16,56 @@ export function CoursesTable({}: CoursesTableProps) {
 
     return (
         <CoursesContainer>
-            {PERIODS.map((period) => {
-                if (!courses.some((course) => course.period === period)) {
-                    return;
-                }
+            {courses.length ? (
+                PERIODS.map((period) => {
+                    if (!courses.some((course) => course.period === period)) {
+                        return;
+                    }
 
-                return (
-                    <CoursesPeriodContainer key={period}>
-                        {courses.map((course) => {
-                            if (course.period !== period) return null;
-                            const isUnlocked = course.prerequisites.includes(
-                                activeCourse.code,
-                            );
-                            const isPrerequisite =
-                                activeCourse.prerequisites?.includes(
-                                    course.code,
+                    return (
+                        <CoursesPeriodContainer key={period}>
+                            <span className="period-label">
+                                {`${period}° período`}
+                            </span>
+                            {courses.map((course) => {
+                                if (course.period !== period) return null;
+                                const isUnlocked =
+                                    course.prerequisites.includes(
+                                        activeCourse.code,
+                                    );
+                                const isPrerequisite =
+                                    activeCourse.prerequisites?.includes(
+                                        course.code,
+                                    );
+                                const isActive =
+                                    activeCourse.code === course.code;
+                                const isDisabled =
+                                    !isUnlocked && !isActive && !isPrerequisite;
+                                return (
+                                    <Card
+                                        isPrerequisite={isPrerequisite}
+                                        isUnlocked={isUnlocked}
+                                        isActive={
+                                            activeCourse.code === course.code
+                                        }
+                                        isDisabled={
+                                            activeCourse?.code && isDisabled
+                                        }
+                                        onClick={() =>
+                                            handleSetActiveCourse(course)
+                                        }
+                                        course={course}
+                                    />
                                 );
-                            const isActive = activeCourse.code === course.code;
-                            const isDisabled =
-                                !isUnlocked && !isActive && !isPrerequisite;
-                            return (
-                                <Card
-                                    isPrerequisite={isPrerequisite}
-                                    isUnlocked={isUnlocked}
-                                    isActive={activeCourse.code === course.code}
-                                    isDisabled={
-                                        activeCourse?.code && isDisabled
-                                    }
-                                    onClick={() =>
-                                        handleSetActiveCourse(course)
-                                    }
-                                    course={course}
-                                />
-                            );
-                        })}
-                    </CoursesPeriodContainer>
-                );
-            })}
+                            })}
+                        </CoursesPeriodContainer>
+                    );
+                })
+            ) : (
+                <EmptyMessage>
+                    Nenhuma disciplina correspondente {':('}
+                </EmptyMessage>
+            )}
         </CoursesContainer>
     );
 }
