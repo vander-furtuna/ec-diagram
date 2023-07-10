@@ -33,7 +33,7 @@ export const CoursesPeriodContainer = styled.div`
         text-transform: uppercase;
         font-size: 0.65rem;
         font-weight: bold;
-        color: ${({ theme }) => theme.text.normal};
+        color: ${({ theme }) => theme.text.gray};
     }
 
     @media screen and (max-width: 500px) {

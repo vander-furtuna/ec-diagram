@@ -1,3 +1,4 @@
+import { LegendPopUp } from '../../components/LegendPopUp';
 import { CoursesTable } from '../CoursesTable';
 import { Header } from '../Header';
 import { DashboardContainer } from './styles';
@@ -9,6 +10,7 @@ export function Dashboard({}: DashboardProps) {
         <DashboardContainer>
             <Header />
             <CoursesTable />
+            <LegendPopUp />
         </DashboardContainer>
     );
 }

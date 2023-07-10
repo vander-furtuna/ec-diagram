@@ -33,6 +33,7 @@ export const theme = {
     text: {
         normal: colorPalette.gray700,
         light: colorPalette.white,
+        gray: colorPalette.gray500,
         dark: colorPalette.black,
     },
     background: {
