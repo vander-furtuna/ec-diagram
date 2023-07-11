@@ -13,6 +13,8 @@ const colorPalette = {
     automation300: '#FFD400',
     computing300: '#58D0F5',
     telecomunications300: '#99EE6F',
+    prerequisite300: '#f56058',
+    unlocked300: '#7258f5',
 
     gray100: '#F5F5F5',
     gray200: '#EAEAEA',
@@ -50,6 +52,8 @@ export const theme = {
             computing: colorPalette.computing300,
             telecomunications: colorPalette.telecomunications300,
             mandatory: colorPalette.gray300,
+            prerequisite: colorPalette.prerequisite300,
+            unlocked: colorPalette.unlocked300,
         },
     },
     input: {

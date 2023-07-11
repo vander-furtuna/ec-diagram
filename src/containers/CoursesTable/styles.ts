@@ -18,6 +18,12 @@ export const CoursesPeriodContainer = styled.div`
     justify-content: center;
     gap: 1rem;
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    grid-auto-rows: 100px;
+    justify-items: center;
+    grid-auto-flow: dense;
+    gap: 2rem;
 
     &:nth-child(2n) {
         background: ${({ theme }) => theme.white};

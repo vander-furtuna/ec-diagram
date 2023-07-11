@@ -3,12 +3,9 @@ import {
     Code,
     Broadcast,
     WarningCircle,
-    Minus,
-    Plus,
 } from '@phosphor-icons/react';
 import { theme } from '../../styles/theme';
 import {
-    LegendPopUpButton,
     LegendPopUpContainer,
     LegendPopUpLabel,
     LegendTypeIndicator,
@@ -49,9 +46,6 @@ export function LegendPopUp({}: LegendPopUpProps) {
     ];
     return (
         <LegendPopUpContainer onClick={() => setIsOpen((prev) => !prev)}>
-            <LegendPopUpButton>
-                {isOpen ? <Minus weight="bold" /> : <Plus weight="bold" />}
-            </LegendPopUpButton>
             {types.map((type) => (
                 <div key={type.color}>
                     <LegendTypeIndicator color={type.color} />

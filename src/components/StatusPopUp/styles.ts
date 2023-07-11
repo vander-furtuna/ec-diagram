@@ -1,22 +1,26 @@
 import { transparentize } from 'polished';
 import styled from 'styled-components';
 
-interface ILegendProps {
+interface IStatusProps {
     isOpen: boolean;
 }
 
-interface ILegendTypeIndicatorProps {
+interface IStatusPopUpProps {
+    isActive: boolean;
+}
+
+interface IStatusTypeIndicatorProps {
     color: string;
 }
 
-export const LegendPopUpContainer = styled.div`
+export const StatusPopUpContainer = styled.div<IStatusPopUpProps>`
     z-index: 1000;
     display: flex;
     gap: 1rem;
     flex-direction: column;
     position: fixed;
-    bottom: 1rem;
-    left: 1rem;
+    bottom: 11rem;
+    left: ${({ isActive }) => (isActive ? '1rem' : '-100%')};
     transition: 0.3s all ease-in-out;
 
     color: ${({ theme }) => theme.text.normal};
@@ -33,27 +37,17 @@ export const LegendPopUpContainer = styled.div`
     }
 `;
 
-export const LegendTypeIndicator = styled.div<ILegendTypeIndicatorProps>`
+export const StatusTypeIndicator = styled.div<IStatusTypeIndicatorProps>`
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
     background: ${({ color }) => color};
 `;
 
-export const LegendPopUpLabel = styled.span<ILegendProps>`
+export const StatusPopUpLabel = styled.span<IStatusProps>`
     display: flex;
     align-items: center;
     line-height: 1;
     transition: all 0.3s ease-in-out;
     font-size: ${({ isOpen }) => (isOpen ? '0.75rem' : '0rem')};
-`;
-
-export const LegendPopUpButton = styled.button`
-    background: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
 `;

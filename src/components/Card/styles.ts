@@ -16,11 +16,11 @@ const getCardColor = (
     isPrerequisite: boolean,
 ) => {
     if (isPrerequisite) {
-        return 'red';
+        return theme.background.card.prerequisite;
     }
 
     if (isUnlocked) {
-        return 'purple';
+        return theme.background.card.unlocked;
     }
     if (type.includes('AUTOMATION')) {
         return theme.background.card.automation;
@@ -70,13 +70,13 @@ export const CardContainer = styled.div<CardProps>`
     ${({ isPrerequisite, isUnlocked, isDisabled }) => {
         if (isPrerequisite) {
             return css`
-                outline: 2px solid red;
+                outline: 2px solid ${theme.background.card.prerequisite};
             `;
         }
 
         if (isUnlocked) {
             return css`
-                outline: 2px solid purple;
+                outline: 2px solid ${theme.background.card.unlocked};
             `;
         }
 
