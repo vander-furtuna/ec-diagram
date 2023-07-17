@@ -15,6 +15,7 @@ interface ICourseContext {
     courses: ICourse[];
     handleSetActiveCourse: (course: ICourse) => void;
     handleSearch: (search: string) => void;
+    resetActiveCourse: () => void;
 }
 
 interface ICourseProviderProps {
@@ -45,12 +46,17 @@ export function CourseProvider({ children }: ICourseProviderProps) {
         });
     }, []);
 
+    const resetActiveCourse = useCallback(() => {
+        setActiveCourse({} as ICourse);
+    }, []);
+
     const value = useMemo(
         () => ({
             activeCourse,
             courses,
             handleSetActiveCourse,
             handleSearch,
+            resetActiveCourse,
         }),
         [courses, activeCourse, handleSetActiveCourse, handleSearch],
     );
