@@ -13,6 +13,8 @@ import { COURSES } from '../data/courses';
 interface ICourseContext {
     activeCourse: ICourse;
     courses: ICourse[];
+    preRequisites: ICourse[];
+    unlocked: ICourse[];
     handleSetActiveCourse: (course: ICourse) => void;
     handleSearch: (search: string) => void;
     resetActiveCourse: () => void;
@@ -27,10 +29,41 @@ const CourseContext = createContext<ICourseContext>({} as ICourseContext);
 export function CourseProvider({ children }: ICourseProviderProps) {
     const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
     const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
+    const [preRequisites, setPreRequisites] = useState<ICourse[]>(
+        [] as ICourse[],
+    );
+    const [unlocked, setUnlocked] = useState<ICourse[]>([] as ICourse[]);
 
     const handleSetActiveCourse = useCallback(
         (course: ICourse) => {
             setActiveCourse(course);
+
+            const filteredPreRequisiteCourses = courses.filter(
+                (initialCourse) => {
+                    // console.log(
+                    //     initialCourse.code,
+                    //     course.name,
+                    //     course.code,
+                    //     course.prerequisites,
+                    //     course.prerequisites.includes(initialCourse.code),
+                    // );
+                    return course.prerequisites.includes(initialCourse.code);
+                },
+            );
+
+            const filteredUnlocked = courses.filter((initialCourse) => {
+                console.log(
+                    initialCourse.code,
+                    course.name,
+                    course.code,
+                    course.prerequisites,
+                    initialCourse.prerequisites.includes(course.code),
+                );
+                return initialCourse.prerequisites.includes(course.code);
+            });
+
+            setPreRequisites(filteredPreRequisiteCourses);
+            setUnlocked(filteredUnlocked);
         },
         [setActiveCourse],
     );
@@ -54,6 +87,8 @@ export function CourseProvider({ children }: ICourseProviderProps) {
         () => ({
             activeCourse,
             courses,
+            preRequisites,
+            unlocked,
             handleSetActiveCourse,
             handleSearch,
             resetActiveCourse,
