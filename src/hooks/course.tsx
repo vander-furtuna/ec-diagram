@@ -9,7 +9,14 @@ import {
     Dispatch,
     SetStateAction,
 } from 'react';
-import { ICourse } from '../@types/ICourse';
+
+import {
+    CourseType,
+    DurationType,
+    ICourse,
+    PeriodType,
+} from '../@types/ICourse';
+
 import { COURSES } from '../data/courses';
 
 interface ICourseContext {
@@ -24,6 +31,12 @@ interface ICourseContext {
     resetActiveCourse: () => void;
 }
 
+type FilterType = {
+    type: CourseType | null;
+    duration: DurationType | null;
+    period: PeriodType | null;
+};
+
 interface ICourseProviderProps {
     children: ReactNode;
 }
@@ -31,6 +44,11 @@ interface ICourseProviderProps {
 const CourseContext = createContext<ICourseContext>({} as ICourseContext);
 
 export function CourseProvider({ children }: ICourseProviderProps) {
+    const [filter, setFilter] = useState<FilterType>({
+        type: null,
+        duration: null,
+        period: null,
+    });
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
     const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
@@ -77,7 +95,9 @@ export function CourseProvider({ children }: ICourseProviderProps) {
         // console.log('search', search);
         setCourses(() => {
             const filteredCourses = COURSES.filter((course) => {
-                return course.name.toLowerCase().includes(search.toLowerCase());
+                return course.name
+                    .toLocaleLowerCase()
+                    .includes(search.toLocaleLowerCase());
             });
             // console.log('filteredCourses', filteredCourses);
             return filteredCourses;
