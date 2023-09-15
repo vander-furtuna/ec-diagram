@@ -19,17 +19,19 @@ export const StatusPopUpContainer = styled.div<IStatusPopUpProps>`
     gap: 1rem;
     flex-direction: column;
     position: fixed;
-    bottom: 11rem;
-    left: ${({ isActive }) => (isActive ? '1rem' : '-100%')};
+    bottom: 10rem;
+    left: ${({ isActive }) => (isActive ? '0' : '-100%')};
     transition: 0.3s all ease-in-out;
 
     color: ${({ theme }) => theme.text.normal};
 
     background: ${({ theme }) => transparentize(0.5, theme.white)};
     backdrop-filter: blur(20px);
-    padding: 1rem;
-    border-radius: ${({ theme }) => theme.borderRadius};
+    padding: 0.75rem;
+    border-radius: 0 ${({ theme }) => theme.borderRadius}
+        ${({ theme }) => theme.borderRadius} 0;
     border: 1px solid ${({ theme }) => theme.gray200};
+    border-left: none;
 
     div {
         display: flex;

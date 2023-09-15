@@ -16,16 +16,18 @@ export const LegendPopUpContainer = styled.div`
     flex-direction: column;
     position: fixed;
     bottom: 1rem;
-    left: 1rem;
+    left: 0;
     transition: 0.3s all ease-in-out;
 
     color: ${({ theme }) => theme.text.normal};
 
     background: ${({ theme }) => transparentize(0.5, theme.white)};
     backdrop-filter: blur(20px);
-    padding: 1rem;
-    border-radius: ${({ theme }) => theme.borderRadius};
+    padding: 0.75rem;
+    border-radius: 0 ${({ theme }) => theme.borderRadius}
+        ${({ theme }) => theme.borderRadius} 0;
     border: 1px solid ${({ theme }) => theme.gray200};
+    border-left: none;
 
     div {
         display: flex;

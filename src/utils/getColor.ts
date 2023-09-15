@@ -14,61 +14,79 @@ export const getCardColor = (
         return theme.background.card.unlocked;
     }
 
-    if (type.includes('AUTOMATION') && type.includes('COMPUTING')) {
-        return `linear-gradient(225deg, ${theme.background.card.automation} 30%, ${theme.background.card.computing} 90%)`;
+    if (
+        type.includes(CourseType.AUTOMATION) &&
+        type.includes(CourseType.COMPUTING)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.automation} 30%, ${theme.background.card.computing} 90%)`;
     }
 
-    if (type.includes('AUTOMATION') && type.includes('TELECOMMUNICATIONS')) {
-        return `linear-gradient(225deg, ${theme.background.card.automation} 0%, ${theme.background.card.telecomunications} 100%)`;
+    if (
+        type.includes(CourseType.AUTOMATION) &&
+        type.includes(CourseType.TELECOMMUNICATIONS)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.automation} 0%, ${theme.background.card.telecomunications} 100%)`;
     }
 
-    if (type.includes('COMPUTING') && type.includes('TELECOMMUNICATIONS')) {
-        return `linear-gradient(225deg, ${theme.background.card.computing} 0%, ${theme.background.card.telecomunications} 100%)`;
+    if (
+        type.includes(CourseType.COMPUTING) &&
+        type.includes(CourseType.TELECOMMUNICATIONS)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.computing} 0%, ${theme.background.card.telecomunications} 100%)`;
     }
 
-    if (type.includes('AUTOMATION')) {
+    if (type.includes(CourseType.AUTOMATION)) {
         return theme.background.card.automation;
     }
 
-    if (type.includes('COMPUTING')) {
+    if (type.includes(CourseType.COMPUTING)) {
         return theme.background.card.computing;
     }
 
-    if (type.includes('TELECOMMUNICATIONS')) {
+    if (type.includes(CourseType.TELECOMMUNICATIONS)) {
         return theme.background.card.telecomunications;
     }
 
-    if (type.includes('MANDATORY')) {
+    if (type.includes(CourseType.MANDATORY)) {
         return theme.background.card.mandatory;
     }
 };
 
 export const getColor = (type: CourseType[]) => {
-    if (type.includes('AUTOMATION') && type.includes('COMPUTING')) {
-        return `linear-gradient(225deg, ${theme.background.card.automation} 30%, ${theme.background.card.computing} 90%)`;
+    if (
+        type.includes(CourseType.AUTOMATION) &&
+        type.includes(CourseType.COMPUTING)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.automation} 30%, ${theme.background.card.computing} 90%)`;
     }
 
-    if (type.includes('AUTOMATION') && type.includes('TELECOMMUNICATIONS')) {
-        return `linear-gradient(225deg, ${theme.background.card.automation} 0%, ${theme.background.card.telecomunications} 100%)`;
+    if (
+        type.includes(CourseType.AUTOMATION) &&
+        type.includes(CourseType.TELECOMMUNICATIONS)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.automation} 0%, ${theme.background.card.telecomunications} 100%)`;
     }
 
-    if (type.includes('COMPUTING') && type.includes('TELECOMMUNICATIONS')) {
-        return `linear-gradient(225deg, ${theme.background.card.computing} 0%, ${theme.background.card.telecomunications} 100%)`;
+    if (
+        type.includes(CourseType.COMPUTING) &&
+        type.includes(CourseType.TELECOMMUNICATIONS)
+    ) {
+        return `radial-gradient(farthest-corner at 0px 0px, ${theme.background.card.computing} 0%, ${theme.background.card.telecomunications} 100%)`;
     }
 
-    if (type.includes('AUTOMATION')) {
+    if (type.includes(CourseType.AUTOMATION)) {
         return theme.background.card.automation;
     }
 
-    if (type.includes('COMPUTING')) {
+    if (type.includes(CourseType.COMPUTING)) {
         return theme.background.card.computing;
     }
 
-    if (type.includes('TELECOMMUNICATIONS')) {
+    if (type.includes(CourseType.TELECOMMUNICATIONS)) {
         return theme.background.card.telecomunications;
     }
 
-    if (type.includes('MANDATORY')) {
+    if (type.includes(CourseType.MANDATORY)) {
         return theme.background.card.mandatory;
     }
 };

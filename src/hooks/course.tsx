@@ -65,16 +65,16 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             setPreRequisites(filteredPreRequisiteCourses);
             setUnlocked(filteredUnlocked);
         },
-        [setActiveCourse],
+        [setActiveCourse, activeCourse],
     );
 
     const handleSearch = useCallback((search: string) => {
-        console.log('search', search);
+        // console.log('search', search);
         setCourses(() => {
             const filteredCourses = COURSES.filter((course) => {
                 return course.name.toLowerCase().includes(search.toLowerCase());
             });
-            console.log('filteredCourses', filteredCourses);
+            // console.log('filteredCourses', filteredCourses);
             return filteredCourses;
         });
     }, []);
