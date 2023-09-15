@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { CourseType } from '../../@types/ICourse';
 import { getColor } from '../../utils/getColor';
+import { transparentize } from 'polished';
 
 interface IInformationSidebarContainer {
     isOpen?: boolean;
@@ -60,7 +61,9 @@ export const InformationSidebarHeader = styled.header<IInformationSidebarHeader>
 export const InformationSidebarDetails = styled.div`
     height: 100%;
     width: 100%;
-    background: ${({ theme }) => theme.background.card.normal};
+    background: ${({ theme }) =>
+        transparentize(0.5, theme.background.card.normal)};
+    backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -75,6 +78,16 @@ export const InformationSidebarDetails = styled.div`
         height: 3rem;
         background: ${({ theme }) =>
             `linear-gradient(to top, transparent 0%, ${theme.background.card.normal} 80%)`};
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 3rem;
+        background: ${({ theme }) =>
+            `linear-gradient(to bottom, transparent 0%, ${theme.background.card.normal} 100%)`};
     }
 `;
 
@@ -99,6 +112,13 @@ export const InformationSidebarDetailsContent = styled.div`
 export const Section = styled.div`
     display: flex;
     flex-direction: column;
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        list-style: none;
+    }
 
     strong {
         font-weight: 500;

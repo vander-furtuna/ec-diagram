@@ -14,17 +14,20 @@ interface IInformationsProps {
 }
 
 export function Informations({}: IInformationsProps) {
-    const { activeCourse, preRequisites, unlocked, resetActiveCourse } =
-        useCourse();
+    const {
+        activeCourse,
+        preRequisites,
+        unlocked,
+        isSidebarOpen,
+        setIsSidebarOpen,
+    } = useCourse();
     return (
         <>
-            <InformationSidebarContainer
-                isOpen={!!Object.keys(activeCourse).length}
-            >
+            <InformationSidebarContainer isOpen={isSidebarOpen}>
                 {!!Object.keys(activeCourse).length && (
                     <InformationSidebarContent>
                         <InformationSidebarHeader type={activeCourse?.type}>
-                            <span onClick={resetActiveCourse}>
+                            <span onClick={() => setIsSidebarOpen(false)}>
                                 <X size={20} weight="bold" />
                             </span>
                             <h1>{activeCourse.name}</h1>
@@ -48,21 +51,25 @@ export function Informations({}: IInformationsProps) {
                                 {preRequisites?.length != 0 && (
                                     <Section>
                                         <strong>Pré-requisitos:</strong>
-                                        {preRequisites?.map((course) => (
-                                            <div
-                                                key={`details ${course.code}`}
-                                            >{`${course?.code} - ${course?.name}`}</div>
-                                        ))}
+                                        <ul>
+                                            {preRequisites?.map((course) => (
+                                                <li
+                                                    key={`details ${course.code}`}
+                                                >{`${course?.code} - ${course?.name}`}</li>
+                                            ))}
+                                        </ul>
                                     </Section>
                                 )}
                                 {unlocked?.length != 0 && (
                                     <Section>
                                         <strong>Desbloqueia:</strong>
-                                        {unlocked?.map((course) => (
-                                            <div
-                                                key={`details ${course.code}`}
-                                            >{`${course?.code} - ${course?.name}`}</div>
-                                        ))}
+                                        <ul>
+                                            {unlocked?.map((course) => (
+                                                <li
+                                                    key={`details ${course.code}`}
+                                                >{`${course?.code} - ${course?.name}`}</li>
+                                            ))}
+                                        </ul>
                                     </Section>
                                 )}
                             </InformationSidebarDetailsContent>

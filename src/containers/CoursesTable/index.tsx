@@ -12,7 +12,8 @@ interface CoursesTableProps {}
 const PERIODS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export function CoursesTable({}: CoursesTableProps) {
-    const { courses, handleSetActiveCourse, activeCourse } = useCourse();
+    const { courses, handleSetActiveCourse, activeCourse, setIsSidebarOpen } =
+        useCourse();
 
     return (
         <CoursesContainer>
@@ -53,6 +54,9 @@ export function CoursesTable({}: CoursesTableProps) {
                                         }
                                         onClick={() =>
                                             handleSetActiveCourse(course)
+                                        }
+                                        onDoubleClick={() =>
+                                            setIsSidebarOpen(true)
                                         }
                                         course={course}
                                     />

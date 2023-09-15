@@ -6,15 +6,19 @@ import {
     useEffect,
     useMemo,
     useState,
+    Dispatch,
+    SetStateAction,
 } from 'react';
 import { ICourse } from '../@types/ICourse';
 import { COURSES } from '../data/courses';
 
 interface ICourseContext {
+    isSidebarOpen: boolean;
     activeCourse: ICourse;
     courses: ICourse[];
     preRequisites: ICourse[];
     unlocked: ICourse[];
+    setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
     handleSetActiveCourse: (course: ICourse) => void;
     handleSearch: (search: string) => void;
     resetActiveCourse: () => void;
@@ -27,6 +31,7 @@ interface ICourseProviderProps {
 const CourseContext = createContext<ICourseContext>({} as ICourseContext);
 
 export function CourseProvider({ children }: ICourseProviderProps) {
+    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
     const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
     const [preRequisites, setPreRequisites] = useState<ICourse[]>(
@@ -89,11 +94,23 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             courses,
             preRequisites,
             unlocked,
+            isSidebarOpen,
+            setIsSidebarOpen,
             handleSetActiveCourse,
             handleSearch,
             resetActiveCourse,
         }),
-        [courses, activeCourse, handleSetActiveCourse, handleSearch],
+        [
+            activeCourse,
+            courses,
+            preRequisites,
+            unlocked,
+            isSidebarOpen,
+            setIsSidebarOpen,
+            handleSetActiveCourse,
+            handleSearch,
+            resetActiveCourse,
+        ],
     );
 
     useEffect(() => {
