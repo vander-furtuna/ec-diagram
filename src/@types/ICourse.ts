@@ -11,7 +11,7 @@ export interface ICourse {
 }
 
 export enum CourseType {
-    MANDATORY = 'Obrogatória',
+    MANDATORY = 'Obrigatória',
     COMPUTING = 'Computação',
     AUTOMATION = 'Automação',
     TELECOMMUNICATIONS = 'Telecomunicações',
