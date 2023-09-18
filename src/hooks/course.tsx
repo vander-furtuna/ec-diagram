@@ -27,6 +27,8 @@ interface ICourseContext {
     preRequisites: ICourse[];
     unlocked: ICourse[];
     selectFilterType: (type: CourseType | null) => void;
+    selectHourFilter: (filter: string | null) => void;
+    selectPeriodFilter: (filter: string | null) => void;
     setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
     handleSetActiveCourse: (course: ICourse) => void;
     handleSearch: (search: string) => void;
@@ -110,6 +112,27 @@ export function CourseProvider({ children }: ICourseProviderProps) {
         [setFilter],
     );
 
+    const selectHourFilter = useCallback(
+        (filter: string | null) => {
+            setFilter((prev) => ({
+                ...prev,
+                duration:
+                    filter === null ? null : (Number(filter) as DurationType),
+            }));
+        },
+        [setFilter],
+    );
+
+    const selectPeriodFilter = useCallback(
+        (filter: string | null) => {
+            setFilter((prev) => ({
+                ...prev,
+                period: filter === null ? null : (Number(filter) as PeriodType),
+            }));
+        },
+        [setFilter],
+    );
+
     const applyFilters = useCallback(() => {
         let pivotFilteredCourses = COURSES.filter((course) => {
             if (
@@ -123,8 +146,28 @@ export function CourseProvider({ children }: ICourseProviderProps) {
 
             return true;
         });
+
         pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
             if (filter.type !== null && !course.type.includes(filter.type)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
+            if (filter.period !== null && course.period !== filter.period) {
+                return false;
+            }
+
+            return true;
+        });
+
+        pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
+            if (
+                filter.duration !== null &&
+                course.duration !== filter.duration
+            ) {
                 return false;
             }
 
@@ -136,6 +179,7 @@ export function CourseProvider({ children }: ICourseProviderProps) {
 
     useEffect(() => {
         applyFilters();
+        console.log(filter);
     }, [filter]);
 
     const value = useMemo(
@@ -146,7 +190,9 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             unlocked,
             isSidebarOpen,
             filteredCourses,
+            selectHourFilter,
             selectFilterType,
+            selectPeriodFilter,
             setIsSidebarOpen,
             handleSetActiveCourse,
             handleSearch,
@@ -159,7 +205,9 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             unlocked,
             isSidebarOpen,
             filteredCourses,
+            selectHourFilter,
             selectFilterType,
+            selectPeriodFilter,
             setIsSidebarOpen,
             handleSetActiveCourse,
             handleSearch,

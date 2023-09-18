@@ -21,7 +21,7 @@ interface TypeSelectProps {
 
 export function TypeSelect({ label, options }: TypeSelectProps) {
     const [internalLabel, setInternalLabel] = useState(label);
-    const [type, setType] = useState<CourseType>(CourseType.MANDATORY);
+    const [type, setType] = useState<CourseType | null>(CourseType.MANDATORY);
     const [isOpen, setIsOpen] = useState(false);
 
     const { selectFilterType } = useCourse();
@@ -32,7 +32,7 @@ export function TypeSelect({ label, options }: TypeSelectProps) {
             type={type}
         >
             <span>{internalLabel}</span>
-            <IconContainer>
+            <IconContainer isOpen={isOpen}>
                 <CaretDown weight="bold" size={16} />
             </IconContainer>
 
@@ -40,11 +40,11 @@ export function TypeSelect({ label, options }: TypeSelectProps) {
                 <TypeSelectOption
                     onClick={() => {
                         setInternalLabel('Tipo');
-                        setType(CourseType.MANDATORY);
+                        setType(null);
                         selectFilterType(null);
                     }}
                 >
-                    {'Nenhum'}
+                    {'Todas'}
                 </TypeSelectOption>
                 {options.map((option) => (
                     <TypeSelectOption
