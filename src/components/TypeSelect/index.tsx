@@ -7,6 +7,7 @@ import {
 } from './styles';
 import { CourseType } from '../../@types/ICourse';
 import { useState } from 'react';
+import { useCourse } from '../../hooks/course';
 
 type CourseTypeOption = {
     title: string;
@@ -20,25 +21,44 @@ interface TypeSelectProps {
 
 export function TypeSelect({ label, options }: TypeSelectProps) {
     const [internalLabel, setInternalLabel] = useState(label);
+    const [type, setType] = useState<CourseType>(CourseType.MANDATORY);
     const [isOpen, setIsOpen] = useState(false);
 
+    const { selectFilterType } = useCourse();
+
     return (
-        <TypeSelectContainer>
-            <span onClick={() => setIsOpen((prev) => !prev)}>
-                {internalLabel}
-            </span>
+        <TypeSelectContainer
+            onClick={() => setIsOpen((prev) => !prev)}
+            type={type}
+        >
+            <span>{internalLabel}</span>
             <IconContainer>
                 <CaretDown weight="bold" size={16} />
             </IconContainer>
-            {isOpen && (
-                <TypeSelectContent>
-                    {options.map((option) => (
-                        <TypeSelectOption type={option.value}>
-                            {option.title}
-                        </TypeSelectOption>
-                    ))}
-                </TypeSelectContent>
-            )}
+
+            <TypeSelectContent isOpen={isOpen} amountOfOptions={options.length}>
+                <TypeSelectOption
+                    onClick={() => {
+                        setInternalLabel('Tipo');
+                        setType(CourseType.MANDATORY);
+                        selectFilterType(null);
+                    }}
+                >
+                    {'Nenhum'}
+                </TypeSelectOption>
+                {options.map((option) => (
+                    <TypeSelectOption
+                        type={option.value}
+                        onClick={() => {
+                            setInternalLabel(option.title);
+                            setType(option.value);
+                            selectFilterType(option.value);
+                        }}
+                    >
+                        {option.title}
+                    </TypeSelectOption>
+                ))}
+            </TypeSelectContent>
         </TypeSelectContainer>
     );
 }

@@ -3,44 +3,69 @@ import { CourseType } from '../../@types/ICourse';
 import { getColor } from '../../utils/getColor';
 
 interface ITypeSelectOption {
+    type?: CourseType;
+}
+
+interface ITypeSelectContainer {
     type: CourseType;
 }
 
-export const TypeSelectContainer = styled.div`
+interface ITypeSelectContent {
+    isOpen: boolean;
+    amountOfOptions?: number;
+}
+
+export const TypeSelectContainer = styled.div<ITypeSelectContainer>`
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
     height: 3rem;
-    width: 8rem;
+    width: 10rem;
     display: flex;
-    background: ${({ theme }) => theme.gray300};
+    gap: 0.5rem;
+    background: ${({ type }) => getColor([type])};
     border-radius: 0.5rem;
     padding: 0.75rem;
-    cursor: pointer;
-    position: absolute;
+    position: relative;
 
     span {
+        font-size: 0.75rem;
+        height: 100%;
         display: flex;
         align-items: center;
         flex: 1;
     }
 `;
 
-export const TypeSelectContent = styled.div`
+export const TypeSelectContent = styled.div<ITypeSelectContent>`
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    height: fit-content;
+    height: ${({ isOpen, amountOfOptions = 1 }) =>
+        isOpen ? `${(amountOfOptions + 1) * 3}rem` : '0rem'};
+    border-radius: 0.5rem;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
     z-index: 100;
 `;
 
-export const TypeSelectOption = styled.div<ITypeSelectOption>`
+export const TypeSelectOption = styled.label<ITypeSelectOption>`
+    cursor: pointer;
     width: 100%;
-    height: 2.5rem;
+    height: 3rem;
     font-size: 0.75rem;
+    padding: 0 0.35rem;
     z-index: 100;
     display: flex;
     align-items: center;
     justify-content: left;
-    background: ${({ type }) => getColor([type])};
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background: ${({ type, theme }) =>
+        type ? getColor([type]) : theme.gray200};
+    transition: filter 0.1s ease-in-out;
+    &:hover {
+        filter: brightness(1.1);
+    }
 `;
 
 export const IconContainer = styled.div`
