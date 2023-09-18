@@ -80,13 +80,6 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             );
 
             const filteredUnlocked = COURSES.filter((initialCourse) => {
-                console.log(
-                    initialCourse.code,
-                    course.name,
-                    course.code,
-                    course.prerequisites,
-                    initialCourse.prerequisites.includes(course.code),
-                );
                 return initialCourse.prerequisites.includes(course.code);
             });
 
