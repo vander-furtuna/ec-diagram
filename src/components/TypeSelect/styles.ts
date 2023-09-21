@@ -39,6 +39,10 @@ export const TypeSelectContainer = styled.div<ITypeSelectContainer>`
         align-items: center;
         flex: 1;
     }
+
+    @media screen and (max-width: 700px) {
+        flex: 1;
+    }
 `;
 
 export const TypeSelectContent = styled.div<ITypeSelectContent>`

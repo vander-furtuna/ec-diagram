@@ -4,7 +4,12 @@ import { Select } from '../../components/Select';
 import { TypeSelect } from '../../components/TypeSelect';
 import { useCourse } from '../../hooks/course';
 import { hoursOptions, periodOptions, typeOptions } from './data/options';
-import { HeaderContainer, LogoContainer, SearchContainer } from './styles';
+import {
+    HeaderContainer,
+    LogoContainer,
+    SearchContainer,
+    SelectContainer,
+} from './styles';
 
 interface HeaderProps {}
 
@@ -17,17 +22,20 @@ export function Header({}: HeaderProps) {
                 <ECLogo />
             </LogoContainer>
             <SearchContainer>
-                <TypeSelect label="Tipo" options={typeOptions} />
-                <Select
-                    label="Periódo"
-                    options={periodOptions}
-                    handleSelect={selectPeriodFilter}
-                />
-                <Select
-                    label="Horas"
-                    options={hoursOptions}
-                    handleSelect={selectHourFilter}
-                />
+                <SelectContainer>
+                    <TypeSelect label="Tipo" options={typeOptions} />
+                    <Select
+                        label="Periódo"
+                        options={periodOptions}
+                        handleSelect={selectPeriodFilter}
+                    />
+                    <Select
+                        label="Horas"
+                        options={hoursOptions}
+                        handleSelect={selectHourFilter}
+                    />
+                </SelectContainer>
+
                 <SearchInput
                     onChange={(event) => handleSearch(event.target.value)}
                 />

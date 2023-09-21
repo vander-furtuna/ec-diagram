@@ -53,6 +53,7 @@ export const InformationSidebarHeader = styled.header<IInformationSidebarHeader>
     }
 
     span {
+        cursor: pointer;
         position: absolute;
         top: 1rem;
         right: 1rem;

@@ -26,6 +26,21 @@ export const LogoContainer = styled.div`
 
 export const SearchContainer = styled.div`
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     width: 100%;
+
+    @media screen and (max-width: 700px) {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+`;
+
+export const SelectContainer = styled.div`
+    display: flex;
+    width: fit-content;
+    gap: 0.5rem;
+
+    @media screen and (max-width: 700px) {
+        width: 100%;
+    }
 `;
