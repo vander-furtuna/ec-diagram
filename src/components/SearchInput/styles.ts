@@ -17,3 +17,15 @@ export const SearchInputContainer = styled.div`
         padding: 1rem;
     }
 `;
+
+export const SearchIconContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    padding: 0 1rem;
+    svg {
+        color: ${({ theme }) => theme.gray500};
+    }
+`;

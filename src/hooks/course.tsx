@@ -9,20 +9,38 @@ import {
     Dispatch,
     SetStateAction,
 } from 'react';
-import { ICourse } from '../@types/ICourse';
+
+import {
+    CourseType,
+    DurationType,
+    ICourse,
+    PeriodType,
+} from '../@types/ICourse';
+
 import { COURSES } from '../data/courses';
 
 interface ICourseContext {
     isSidebarOpen: boolean;
     activeCourse: ICourse;
     courses: ICourse[];
+    filteredCourses: ICourse[];
     preRequisites: ICourse[];
     unlocked: ICourse[];
+    selectFilterType: (type: CourseType | null) => void;
+    selectHourFilter: (filter: string | null) => void;
+    selectPeriodFilter: (filter: string | null) => void;
     setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
     handleSetActiveCourse: (course: ICourse) => void;
     handleSearch: (search: string) => void;
     resetActiveCourse: () => void;
 }
+
+type FilterType = {
+    search: string | null;
+    type: CourseType | null;
+    duration: DurationType | null;
+    period: PeriodType | null;
+};
 
 interface ICourseProviderProps {
     children: ReactNode;
@@ -31,8 +49,15 @@ interface ICourseProviderProps {
 const CourseContext = createContext<ICourseContext>({} as ICourseContext);
 
 export function CourseProvider({ children }: ICourseProviderProps) {
+    const [filter, setFilter] = useState<FilterType>({
+        search: null,
+        type: null,
+        duration: null,
+        period: null,
+    });
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [courses, setCourses] = useState<ICourse[]>([] as ICourse[]);
+    const [filteredCourses, setFilteredCourses] = useState<ICourse[]>(COURSES);
     const [activeCourse, setActiveCourse] = useState<ICourse>({} as ICourse);
     const [preRequisites, setPreRequisites] = useState<ICourse[]>(
         [] as ICourse[],
@@ -43,7 +68,7 @@ export function CourseProvider({ children }: ICourseProviderProps) {
         (course: ICourse) => {
             setActiveCourse(course);
 
-            const filteredPreRequisiteCourses = courses.filter(
+            const filteredPreRequisiteCourses = COURSES.filter(
                 (initialCourse) => {
                     // console.log(
                     //     initialCourse.code,
@@ -56,14 +81,7 @@ export function CourseProvider({ children }: ICourseProviderProps) {
                 },
             );
 
-            const filteredUnlocked = courses.filter((initialCourse) => {
-                console.log(
-                    initialCourse.code,
-                    course.name,
-                    course.code,
-                    course.prerequisites,
-                    initialCourse.prerequisites.includes(course.code),
-                );
+            const filteredUnlocked = COURSES.filter((initialCourse) => {
                 return initialCourse.prerequisites.includes(course.code);
             });
 
@@ -74,19 +92,95 @@ export function CourseProvider({ children }: ICourseProviderProps) {
     );
 
     const handleSearch = useCallback((search: string) => {
-        // console.log('search', search);
-        setCourses(() => {
-            const filteredCourses = COURSES.filter((course) => {
-                return course.name.toLowerCase().includes(search.toLowerCase());
-            });
-            // console.log('filteredCourses', filteredCourses);
-            return filteredCourses;
-        });
+        setFilter((prev) => ({
+            ...prev,
+            search,
+        }));
     }, []);
 
     const resetActiveCourse = useCallback(() => {
         setActiveCourse({} as ICourse);
     }, []);
+
+    const selectFilterType = useCallback(
+        (type: CourseType | null) => {
+            setFilter((prev) => ({
+                ...prev,
+                type: type === null ? null : type,
+            }));
+        },
+        [setFilter],
+    );
+
+    const selectHourFilter = useCallback(
+        (filter: string | null) => {
+            setFilter((prev) => ({
+                ...prev,
+                duration:
+                    filter === null ? null : (Number(filter) as DurationType),
+            }));
+        },
+        [setFilter],
+    );
+
+    const selectPeriodFilter = useCallback(
+        (filter: string | null) => {
+            setFilter((prev) => ({
+                ...prev,
+                period: filter === null ? null : (Number(filter) as PeriodType),
+            }));
+        },
+        [setFilter],
+    );
+
+    const applyFilters = useCallback(() => {
+        let pivotFilteredCourses = COURSES.filter((course) => {
+            if (
+                filter.search !== null &&
+                !course.name
+                    .toLocaleLowerCase()
+                    .includes(filter.search.toLocaleLowerCase())
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+
+        pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
+            if (filter.type !== null && !course.type.includes(filter.type)) {
+                return false;
+            }
+
+            return true;
+        });
+
+        pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
+            if (filter.period !== null && course.period !== filter.period) {
+                return false;
+            }
+
+            return true;
+        });
+
+        pivotFilteredCourses = pivotFilteredCourses.filter((course) => {
+            if (
+                filter.duration !== null &&
+                course.duration !== filter.duration
+            ) {
+                return false;
+            }
+
+            return true;
+        });
+
+        setFilteredCourses(pivotFilteredCourses);
+    }, [courses, filter]);
+
+    useEffect(() => {
+        applyFilters();
+        console.log(filter);
+    }, [filter]);
 
     const value = useMemo(
         () => ({
@@ -95,6 +189,10 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             preRequisites,
             unlocked,
             isSidebarOpen,
+            filteredCourses,
+            selectHourFilter,
+            selectFilterType,
+            selectPeriodFilter,
             setIsSidebarOpen,
             handleSetActiveCourse,
             handleSearch,
@@ -106,6 +204,10 @@ export function CourseProvider({ children }: ICourseProviderProps) {
             preRequisites,
             unlocked,
             isSidebarOpen,
+            filteredCourses,
+            selectHourFilter,
+            selectFilterType,
+            selectPeriodFilter,
             setIsSidebarOpen,
             handleSetActiveCourse,
             handleSearch,

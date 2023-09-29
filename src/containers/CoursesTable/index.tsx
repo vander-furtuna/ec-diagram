@@ -12,14 +12,22 @@ interface CoursesTableProps {}
 const PERIODS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export function CoursesTable({}: CoursesTableProps) {
-    const { courses, handleSetActiveCourse, activeCourse, setIsSidebarOpen } =
-        useCourse();
+    const {
+        filteredCourses,
+        handleSetActiveCourse,
+        activeCourse,
+        setIsSidebarOpen,
+    } = useCourse();
 
     return (
         <CoursesContainer>
-            {courses.length ? (
+            {filteredCourses.length ? (
                 PERIODS.map((period) => {
-                    if (!courses.some((course) => course.period === period)) {
+                    if (
+                        !filteredCourses.some(
+                            (course) => course.period === period,
+                        )
+                    ) {
                         return;
                     }
 
@@ -28,7 +36,7 @@ export function CoursesTable({}: CoursesTableProps) {
                             <span className="period-label">
                                 {`${period}° período`}
                             </span>
-                            {courses.map((course) => {
+                            {filteredCourses.map((course) => {
                                 if (course.period !== period) return null;
                                 const isUnlocked =
                                     course.prerequisites.includes(

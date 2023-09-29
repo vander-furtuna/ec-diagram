@@ -27,11 +27,12 @@ export const InformationSidebarContent = styled.div`
     position: fixed;
     width: 20rem;
     height: 100vh;
-    border-radius: 0.5rem 0 0 0.5rem;
+    border-radius: ${({ theme }) => theme.borderRadius} 0 0
+        ${({ theme }) => theme.borderRadius};
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 4px 4px 20px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 4px 4px 20px -2px rgba(0, 0, 0, 0.1);
 `;
 
 export const InformationSidebarHeader = styled.header<IInformationSidebarHeader>`
@@ -52,6 +53,7 @@ export const InformationSidebarHeader = styled.header<IInformationSidebarHeader>
     }
 
     span {
+        cursor: pointer;
         position: absolute;
         top: 1rem;
         right: 1rem;

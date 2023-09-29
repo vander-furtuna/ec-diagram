@@ -62,7 +62,7 @@ export const theme = {
         text: colorPalette.gray700,
     },
 
-    borderRadius: '0.5rem',
+    borderRadius: '0.35rem',
 };
 
 export type ThemeType = typeof theme;
