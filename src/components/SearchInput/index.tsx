@@ -1,16 +1,18 @@
 import { InputHTMLAttributes } from 'react';
-import { SearchIconContainer, SearchInputContainer } from './styles';
+import { SearchIconContainer, SearchBarContainer } from './styles';
 import { MagnifyingGlass } from '@phosphor-icons/react';
+import { Filter } from './Filter';
 
-interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {}
+type SearchBarProps = InputHTMLAttributes<HTMLInputElement>
 
-export function SearchInput({ ...rest }: SearchInputProps) {
+export function SearchBar({ ...rest }: SearchBarProps) {
     return (
-        <SearchInputContainer>
+        <SearchBarContainer>
+            <Filter />
             <input type="text" {...rest} />
             <SearchIconContainer>
                 <MagnifyingGlass size={20} weight="bold" />
             </SearchIconContainer>
-        </SearchInputContainer>
+        </SearchBarContainer>
     );
 }

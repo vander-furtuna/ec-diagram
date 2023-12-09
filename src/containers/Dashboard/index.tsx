@@ -5,10 +5,10 @@ import { CoursesTable } from '../CoursesTable';
 import { Header } from '../Header';
 import { DashboardContainer } from './styles';
 
-interface DashboardProps {}
 
-export function Dashboard({}: DashboardProps) {
+export function Dashboard() {
     const { activeCourse } = useCourse();
+
 
     return (
         <DashboardContainer>
